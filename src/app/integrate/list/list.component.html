@@ -1,0 +1,23 @@
+<h3>Formularz dodawania</h3>
+<div *ngIf="isError" style="color:red" class="form_message">{{message}}</div>
+<div>
+  <label for="item">Nazwa</label>
+  <input id="item" #item (keyup.enter)="myBtn.click()"><br>
+  <button type="button" #myBtn (click)="addItem(item.value); item.value=null; item.focus()">Wyślij</button>
+</div>
+<br>
+<h3>Wartości</h3>
+<table class="list_items">
+  <thead>
+    <tr>
+      <th>Wartość</th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of items">
+    <td>{{item}}</td>
+  </tr>
+  </tbody>
+
+
+</table>
