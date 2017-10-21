@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {ListService} from "../list.service";
 
 @Component({
   selector: 'int-list',
@@ -11,10 +12,18 @@ export class ListComponent implements OnInit {
   message: string = null;
   static ERROR = 'Nie wypełniono pola';
 
-  constructor() {
+  constructor(private myService: ListService) {
   }
 
   ngOnInit() {
+  }
+
+  addItemToService(value:string):void{
+    this.myService.add(value);
+  }
+
+  listItemsFromService():string[]{
+    return this.myService.all();
   }
 
   addItem(value: string): void {

@@ -3,6 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ListComponent } from './list.component';
 import {By} from "@angular/platform-browser";
 import {DebugElement} from "@angular/core";
+import {ListService} from "../list.service";
+import '@angular/core/testing'
 
 describe('ListComponent', () => {
   let component: ListComponent;
@@ -10,7 +12,7 @@ describe('ListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListComponent ]
+      declarations: [ ListComponent ], providers:[ListService]
     })
     .compileComponents();
   }));
@@ -51,7 +53,7 @@ describe('ListComponent', () => {
     fixture.detectChanges();
 
     //then
-    fixture.displayErrorMessage();
+    fixture.thenDisplayErrorMessage();
   })
 
   it('should hide error message when visible and added new correct item', ()=>{
@@ -70,6 +72,24 @@ describe('ListComponent', () => {
     expect(fixture.debugElement.nativeElement.innerHTML).not.toContain(ListComponent.ERROR);
   });
 
+  it('should add item to service', ()=>{
+    //given
+    let sampleItem :string = "ala ma kota";
+
+    //when
+    component.addItemToService(sampleItem);
+
+    //then
+    expect(component.listItemsFromService().length).toBe(1);
+  });
+
+  it('blablala', ()=>{
+    spyOn(TestBed.get(ListService), 'all').and.returnValue(['ala', 'tomek', 'yellow']);
+    console.log(component.listItemsFromService());
+
+  })
+
+
 });
 
 class ExtendedComponentFixture{
@@ -81,7 +101,12 @@ class ExtendedComponentFixture{
     this.el.detectChanges();
   }
 
-  displayErrorMessage():void{
+  thenDisplayErrorMessage():void{
     expect(this.el.debugElement.nativeElement.innerHTML).toContain(ListComponent.ERROR);
   }
+  enterValue(value:string):void{
+
+  }
+
+
 }
